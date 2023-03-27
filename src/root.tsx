@@ -1,18 +1,21 @@
 // @refresh reload
 import { Suspense } from "solid-js";
-import {
-  Body,
-  ErrorBoundary,
-  FileRoutes,
-  Head,
-  Html, Link, Meta,
-  Routes,
-  Scripts,
-  Title
-} from "solid-start";
+import { Body, ErrorBoundary, FileRoutes, Head, Html, Link, Meta, Routes, Scripts, Title } from "solid-start";
+import { useRegisterSW } from "virtual:pwa-register/solid";
 import "./root.css";
 
+const intervalMS = 60 * 60 * 1000;
+
 export default function Root() {
+  useRegisterSW({
+    onRegistered(r) {
+      r &&
+        setInterval(() => {
+          r.update();
+        }, intervalMS);
+    },
+  });
+
   return (
     <Html lang="en">
       <Head>
